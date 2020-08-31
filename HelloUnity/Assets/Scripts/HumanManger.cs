@@ -23,7 +23,7 @@ public class HumanManger : MonoBehaviour
         //     humans[i].Say();
         // }
 
-
+        // 제어 / 반복문 
         // ShowEnding(player.love[0]);
         // ShowEnding(player.love[1]);
         // ShowEnding(player.love[2]);
