@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Person : MonoBehaviour
+public class Jumper : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
