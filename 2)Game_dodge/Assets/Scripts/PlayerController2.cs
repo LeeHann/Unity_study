@@ -23,6 +23,10 @@ public class PlayerController2 : MonoBehaviour
         playerRigidbody.velocity = newVelocity;
 
         //transform.position = new Vector3(transform.position.x+xSpeed, transform.position.y+ySpeed, 0f);
+
+        // Vector3 newMove = new Vector3(xInput, 0, zInput);
+        // newMove = newMove.normalized * Time.deltaTime;
+        // playerRigidbody.MovePosition(transform(transform.position + newMove));
     }
 
     public void Die()
