@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using System.Text;
 using UnityEngine;
 
@@ -8,6 +9,14 @@ public class TestType : MonoBehaviour
     // 변수 선언
     public int a; //접근제한자 public, 다른 코드에서 접근 가능
     private int b; // private, 자기 class만 접근 가능
+
+    // 상수
+//    public const float speed = 8f;
+//    public readonly GameObject somePrefab = new GameObject(); // 읽기 전용
+
+    // 정적 변수
+    public static string godName = "god";
+
 
     // 정수 타입 자료형
     short shortNum = 0; // 2Byte 
@@ -47,8 +56,10 @@ public class TestType : MonoBehaviour
 
         string str1 = "hello";
         string str2 = "hi";
-        string text = "{0} {1}";
-        Debug.Log(string.Format(text, str1, str2));
+        int money = 3500;
+        DateTime day = new DateTime(2020, 9, 3);
+        string text = "{3:MM.dd.yy} {0} {1} {2:#,###}";
+        Debug.Log(string.Format(text, str1, str2, money, day));
 
         StringBuilder sb = new StringBuilder();
         sb.Append(str1);
