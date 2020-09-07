@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
         renderer.sprite = spriteDoorClose;
     }
 
-    public void DoorClick(bool hasKey)
+    public void ClickDoor(bool hasKey)
     {
         if(hasKey)
         {
@@ -29,7 +29,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            GameManager.Manager.ShowText("문이 잠겨있습니다.");
+            GameManager.Manager.ShowNotice("문이 잠겨있습니다.");
         }
     }
 }

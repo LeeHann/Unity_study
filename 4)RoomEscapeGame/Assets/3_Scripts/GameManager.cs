@@ -47,17 +47,19 @@ public class GameManager : MonoBehaviour
     }
 
     bool hasKey;
+    bool isPopupOn;
     public Text textNotice;
-
     private void Awake() 
     {
         manager = this;
-        hasKey = false;    
+        hasKey = false;   
+        isPopupOn = false; 
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if(isPopupOn == true) return ;
+
         if (Input.GetMouseButtonDown(0)) // Left
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
@@ -71,15 +73,19 @@ public class GameManager : MonoBehaviour
                     case "Door" :
                         Debug.Log("문 클릭");
                         Door door = hit.transform.GetComponent<Door>();
-                        door.DoorClick(hasKey);
+                        door.ClickDoor(hasKey);
                         break;
 
                     case "Drawer" :
                         Debug.Log("서랍 클릭");
+                        Drawer drawer = hit.transform.GetComponent<Drawer>();
+                        drawer.ClickDrawer();
                         break;
 
                     case "Lock" :
                         Debug.Log("자물쇠 클릭");
+                        CombiLock combilock = hit.transform.GetComponent<CombiLock>();
+                        combilock.ClickCombiLock();
                         break;
 
                     default :
@@ -89,8 +95,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetPopupOn(bool isOn)
+    {
+        isPopupOn = isOn;
+    }
     
-    public void ShowText(string notice)
+    public void ShowNotice(string notice)
     {
         textNotice.text = notice;
     }
