@@ -94,7 +94,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    
+    //팝업이 떠 있는지 확인하기
     public void SetPopupOn(bool isOn)
     {
         isPopupOn = isOn;
