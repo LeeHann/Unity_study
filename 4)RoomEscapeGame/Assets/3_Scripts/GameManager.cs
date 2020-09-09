@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     bool isPopupOn;
     public GameObject escapePopup;
     public Text textNotice;
+    public Transform inventory; //image로 만들어진 inventory의 위치
+    public GameObject itemSlotPrefab;
+
     private void Awake() 
     {
         manager = this;
@@ -112,6 +115,14 @@ public class GameManager : MonoBehaviour
                 ShowNotice("열쇠를 얻었습니다.");
                 break;
         }
+        Image itemImg = item.GetComponent<Image>();
+        GameObject slotObj = Instantiate(itemSlotPrefab, inventory); // gameobject를 만드는 함수
+        
+        RectTransform slotTrans = slotObj.GetComponent<RectTransform>();
+        slotTrans.anchoredPosition = new Vector2(0f,0f); //RectTransform 에서 화면 정렬하는 기능을 사용하기 위한 함수
+
+        UIItemSlot slot = slotObj.GetComponent<UIItemSlot>(); // C# scripts component
+        slot.UpdateSlot(itemImg.sprite);
     }
 
     //팝업이 떠 있는지 확인하기
