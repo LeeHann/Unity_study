@@ -11,7 +11,10 @@ public class RSP_GameManager : MonoBehaviour
         2. 내가 낸 손 모양이랑 PC의 손 모양의 승패를 갈라서 결과를 텍스트로 보여줌. 
 
     * 추가 구현
-        1. Hand[] pcHandPattern 배열을 만들고, 
+        1. Hand[] pcHandPattern 배열을 만들고, 10개의 준비된 손 모양을 차례로 내기.
+        2. 단체전 버튼(가위,바위,보)을 추가하고,
+        3.
+        4. 
     */
 
     public enum Hand
@@ -29,6 +32,7 @@ public class RSP_GameManager : MonoBehaviour
         Draw = 2
     }
 
+    public const int NUM_OF_GROUP_GAME = 10;
     Hand[] pcHandPattern = new Hand[10]
     {
         Hand.Rock,
@@ -43,6 +47,9 @@ public class RSP_GameManager : MonoBehaviour
         Hand.Rock
     };
 
+    public Image imgBG;     
+    public Color winBgColor;
+    public Color loseBgColor;
     public Image imgPcHand;
     public Sprite[] handSprites;
     public Text txtGameResult;
@@ -52,10 +59,75 @@ public class RSP_GameManager : MonoBehaviour
     int allGame, allWin, allLose;
 
     private void Start() {
+        ClickReset();    
+    }
+
+    public void ClickReset()
+    {
         allGame = 0;
         allWin = 0;
         allLose = 0;
         txtGameResult.text = "";
+        txtAllResult.text = "";
+    }
+
+    IEnumerator IEShowGroupResult(int myHandInt)
+    {
+        int groupWin = 0;
+        int groupLose = 0;
+        Hand myHand = (Hand)myHandInt;
+        for(int i=0; i<NUM_OF_GROUP_GAME; i++)
+        {
+            int pcHandIndex = (int)pcHandPattern[i];
+            imgPcHand.sprite = handSprites[pcHandIndex];
+                    
+            GameResult result = GetGameResult(myHand, pcHandPattern[i]);
+            switch(result)
+            {
+                case GameResult.Win :
+                    groupWin += 1;
+                    txtGameResult.text = (i+1) + "번째 대결은 이겼다.";
+                    break;
+                case GameResult.Lose :
+                    groupLose += 1;
+                    txtGameResult.text = (i+1) + "번째 대결은 졌다.";
+                    break;
+                case GameResult.Draw :
+                    txtGameResult.text = (i+1) + "번째 대결은 비겼다.";
+                    break;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        if (groupWin > groupLose)
+        {
+            txtGameResult.text = "단체전 이겼다!!!";
+            txtGameResult.color = gameResultTextColors[0];
+            imgBG.color = winBgColor;
+        }
+        else
+        {
+            txtGameResult.text = "단체전 졌다...";
+            txtGameResult.color = gameResultTextColors[1];
+            imgBG.color = loseBgColor;
+        }
+
+        string resultText = "단체전 ({0} 회 대결)\n<size=40><color=#FF698F>{1} 회 승</color> / {2} 회 패</size>";
+        txtAllResult.text = string.Format(resultText, NUM_OF_GROUP_GAME, groupWin, groupLose);
+        
+    }
+
+    IEnumerator ShowGroupGameResultCoroutine;
+    public void ClickGroupGame(int myHandInt)
+    {
+        // StartCoroutine("IEShowGroupResult", myHandInt); // string 오타 발생으로 인한 오류 가능성
+        
+        // StartCoroutine(IEShowGroupResult(myHandInt)); // Stop 불가
+
+        ShowGroupGameResultCoroutine = IEShowGroupResult(myHandInt);
+        StartCoroutine(ShowGroupGameResultCoroutine);
+        
+        // StopCoroutine(ShowGroupGameResultCoroutine);
     }
 
     public void ClickMyHandButton(int handInt)
@@ -75,12 +147,16 @@ public class RSP_GameManager : MonoBehaviour
         {
             case GameResult.Win :
                 allWin += 1;
+                txtGameResult.text = "이겼다!!!";
                 break;
 
             case GameResult.Lose :
+                allLose += 1;
+                txtGameResult.text = "졌다...";
                 break;
 
             case GameResult.Draw :
+                txtGameResult.text = "비겼다.";
                 break;
         }
 

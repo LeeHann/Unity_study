@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     bool hasKey;
     bool isPopupOn;
+    public GameObject escapePopup;
     public Text textNotice;
     private void Awake() 
     {
@@ -74,6 +75,11 @@ public class GameManager : MonoBehaviour
                         Debug.Log("문 클릭");
                         Door door = hit.transform.GetComponent<Door>();
                         door.ClickDoor(hasKey);
+                        if(hasKey == true)
+                        {
+                            escapePopup.SetActive(true);
+                            isPopupOn = true;
+                        }
                         break;
 
                     case "Drawer" :
@@ -95,6 +101,19 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void PutInItem(GameObject item)
+    {
+        string itemId = item.name;
+        switch(itemId)
+        {
+            case "Item-Key" :
+                hasKey = true;
+                item.SetActive(false);
+                ShowNotice("열쇠를 얻었습니다.");
+                break;
+        }
+    }
+
     //팝업이 떠 있는지 확인하기
     public void SetPopupOn(bool isOn)
     {
