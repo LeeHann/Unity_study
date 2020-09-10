@@ -26,10 +26,13 @@ public class GameManager : MonoBehaviour
   public GameObject goalPrefab;
   public MoveableProp player;
   List<MoveableProp> itemBoxes;
+  Dictionary<Vector3, GameObject> goalDic;
 
   private void Start()
   {
     itemBoxes = new List<MoveableProp>();
+    goalDic = new Dictionary<Vector3, GameObject>();
+
     for (int z = 0; z < stage.Length; z++)
     {
       for (int x = 0; x < stage[z].Length; x++)
@@ -54,12 +57,13 @@ public class GameManager : MonoBehaviour
 
             // itemBoxes.Remove(moveableItem);
             // itemBoxes.RemoveAt(index);
-            
-            moveableItem.Init(x,z);
+
+            moveableItem.Init(x, z);
             break;
 
           case 'G':
-            LeavePropOnStage(goalPrefab, x, z);
+            GameObject goalObj = LeavePropOnStage(goalPrefab, x, z);
+            goalDic.Add(new Vector3(x, 0f, z), goalObj);
             break;
 
           default:
@@ -111,27 +115,51 @@ public class GameManager : MonoBehaviour
         int nextX = (int)(moveX + dir.x);
         int nextZ = (int)(moveZ - dir.z);
         char nextItem = stage[nextZ][nextX]; //플레이어가 미는 아이템의 전방
-        if (!(nextItem == 'W' || nextItem == 'I'))
+        if (nextItem == 'G')
+        { // 색 변경 -> GetComponent<Renderer>().material.color;
+
+          stage[moveZ][moveX] = 'P';
+          stage[nextZ][nextX] = ' ';
+          player.Move(dir);
+
+          foreach (var i in itemBoxes)
+          {
+            if (i.myPos.x == moveX && i.myPos.z == moveZ)
+            {
+              // i.Move(dir);
+              i.gameObject.SetActive(false);
+            }
+          }
+
+          Vector3 goalKey = new Vector3(nextX, 0f, nextZ);
+          if (goalDic.ContainsKey(goalKey))
+          {
+            goalDic[goalKey].SetActive(false);
+          }
+          else Debug.LogError("no obj in Dict");
+        }
+        else if (!(nextItem == 'W' || nextItem == 'I'))
         {
           stage[moveZ][moveX] = 'P';
           stage[nextZ][nextX] = 'I';
 
           player.Move(dir);
-          foreach(var i in itemBoxes)
+          foreach (var i in itemBoxes)
           {
-            if(i.myPos.x == moveX && i.myPos.z == moveZ)
+            if (i.myPos.x == moveX && i.myPos.z == moveZ)
             {
               i.Move(dir);
             }
           }
         }
+        
         break;
 
       case ' ':
       case 'P':
       case 'G':
         player.Move(dir);
-        break; 
+        break;
     }
   }
 
@@ -145,17 +173,17 @@ public class GameManager : MonoBehaviour
         return false;
 
       case 'I':
-      foreach(var item in itemBoxes)
-      {
-        if(item.myPos == new Vector3(moveX, 0f, moveZ))
+        foreach (var item in itemBoxes)
         {
+          if (item.myPos == new Vector3(moveX, 0f, moveZ))
+          {
 
+          }
         }
-      }
         return true;
-        
-      default :
-      return false;
+
+      default:
+        return false;
     }
   }
 
