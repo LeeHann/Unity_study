@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 122709049}
   - component: {fileID: 122709051}
   m_Layer: 5
-  m_Name: Item-Key
+  m_Name: Item-Key_111
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1646,8 +1646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86576fd77f330ab4cbae3f7f424f06f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteOpenDrawer: {fileID: 21300000, guid: c4656d63e68014b4cb03adcc13d1d42c, type: 3}
-  spriteCloseDrawer: {fileID: 21300000, guid: e4ff0069b8fff20468aaacc56434e9fa, type: 3}
+  openSprite: {fileID: 21300000, guid: c4656d63e68014b4cb03adcc13d1d42c, type: 3}
+  closeSprite: {fileID: 21300000, guid: e4ff0069b8fff20468aaacc56434e9fa, type: 3}
   combiLock: {fileID: 0}
   drawerPopup: {fileID: 216313796}
 --- !u!1 &1158942089
@@ -2525,8 +2525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9afc434a01206ae4998930018a47400f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteDoorClose: {fileID: 21300000, guid: f1f92728f79c18c458d59ca8da28c803, type: 3}
-  spriteDoorOpen: {fileID: 21300000, guid: 568a45092fa286d4985541910fb7b84e, type: 3}
+  openSprite: {fileID: 21300000, guid: 568a45092fa286d4985541910fb7b84e, type: 3}
+  closeSprite: {fileID: 21300000, guid: f1f92728f79c18c458d59ca8da28c803, type: 3}
+  keyName: Item-Key_111
+  doorName: "\uCCAB\uBC88\uC9F8 \uBC29 \uBB38"
 --- !u!1 &1909696950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2801,8 +2803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86576fd77f330ab4cbae3f7f424f06f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteOpenDrawer: {fileID: 21300000, guid: c4656d63e68014b4cb03adcc13d1d42c, type: 3}
-  spriteCloseDrawer: {fileID: 21300000, guid: e4ff0069b8fff20468aaacc56434e9fa, type: 3}
+  openSprite: {fileID: 21300000, guid: c4656d63e68014b4cb03adcc13d1d42c, type: 3}
+  closeSprite: {fileID: 21300000, guid: e4ff0069b8fff20468aaacc56434e9fa, type: 3}
   combiLock: {fileID: 601222736}
   drawerPopup: {fileID: 365663319}
 --- !u!1 &1970331722
@@ -2839,6 +2841,8 @@ MonoBehaviour:
   inventory: {fileID: 1665322239}
   itemSlotPrefab: {fileID: 3155867341703600032, guid: 250fb9b8d0bb5944183240a9d0d3b6d0,
     type: 3}
+  doors:
+  - {fileID: 1802279901}
 --- !u!4 &1970331724
 Transform:
   m_ObjectHideFlags: 0

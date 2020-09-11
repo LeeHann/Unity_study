@@ -2,10 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 한정자
+//partial : 한 클래스를 나눠서 작업할 수 있음
+//sealed : 상속 제한(파생 금지)
+//override : 상속된 메서드, 추상 또는 가상 구현을 확장하거나 수정할 수 있게 함
+//virtual :  선언을 수정하고 파생 클래스에서 재정의하도록 허용
+
 public class TestInheritance : MonoBehaviour
 {
 
     void Start()
+    {
+        IArchor[] archors = new IArchor[2];
+
+        Orc orc = new Orc("오크 궁수", "옼!", 100);
+        Hero hero = new Hero();
+
+        archors[0] = orc;
+        archors[1] = hero;
+
+        foreach(var a in archors)
+        {
+            a.ShootBow();
+        }
+
+        IWalkable[] walkers = new IWalkable[2];
+        Troll troll = new Troll("걷는 트롤", 150);
+
+        walkers[0] = hero;
+        walkers[1] = troll;
+
+        foreach(var w in walkers)
+        {
+            w.Walk();
+            Debug.Log("걸어온 거리 : " + w.walkedDistance);
+        }
+    }
+
+    void Test()
     {
         Orc orc = new Orc("지나가는 오크", "옼! 옼!", 10);
         Troll troll = new Troll("서 있는 트롤", 100);

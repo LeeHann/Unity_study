@@ -37,7 +37,7 @@ public abstract class Monster //추상 클래스
     }
 }
 
-public class Orc : Monster
+public class Orc : Monster, IArchor
 {
     int defence;
 
@@ -65,10 +65,21 @@ public class Orc : Monster
         Debug.Log(sleepSound);
         Debug.Log(sleepSound);
     }
+
+    public void ShootBow()
+    {
+        Debug.Log("오크는 활을 따닷 쏜다.");
+    }
 }
 
-public class Troll : Monster
+public class Troll : Monster, IWalkable
 {   
+    public int walkedDistance { get {return 1;} }
+    public void Walk()
+    {
+        Debug.Log("트롤은 터덜터덜 걷는다.");
+    }
+
     public Troll(string name, int hp) : base(name)
     {
         this.hp = hp;
