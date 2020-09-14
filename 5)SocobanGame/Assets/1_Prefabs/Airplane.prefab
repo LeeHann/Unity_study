@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7317459566878106541}
   - component: {fileID: 7982329502999164306}
   - component: {fileID: 709593039969661249}
+  - component: {fileID: 4563897500560400802}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -90,9 +91,25 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 89cfb46882e163d428cb9f3d79ae2393, type: 3}
+--- !u!54 &4563897500560400802
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615228790469626747}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &9196506098933251279
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3775415659777349129}
+  - component: {fileID: 9096506810698443583}
   m_Layer: 0
   m_Name: Airplane
   m_TagString: Untagged
@@ -124,3 +142,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9096506810698443583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196506098933251279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf681d0d7ff7804c8427c4b4d8a7a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
