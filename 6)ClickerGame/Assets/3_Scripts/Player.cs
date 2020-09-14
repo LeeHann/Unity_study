@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
+        if (target == null) return;
+
         animator.SetTrigger("Attack");
         target.GetHit(power);
     }
