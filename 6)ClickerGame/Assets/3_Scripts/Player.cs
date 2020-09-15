@@ -7,10 +7,17 @@ public class Player : MonoBehaviour
     // 1. 레벨↑, 경험치, 공격력↑
     // 2. 공격(), 경험치업(), 레벨업()
 
+    [SerializeField] AttackAttrib attackAttrib;
+    
+
+    
+    [Header("player info")] //인스펙터 창을 정리하는 용도, 인스펙터 창에 라벨링이 됨
+    [SerializeField] private Animator animator;
+    [SerializeField] int power = 3;
     int level;
     int exp;
-    [SerializeField] int power = 3;
-    [SerializeField] private Animator animator;
+    
+
     Enemy target;
 
 
@@ -44,6 +51,6 @@ public class Player : MonoBehaviour
         if (target == null) return;
 
         animator.SetTrigger("Attack");
-        target.GetHit(power);
+        target.GetHit(new AttackInfo(attackAttrib, power));
     }
 }

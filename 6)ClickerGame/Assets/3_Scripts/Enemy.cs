@@ -2,17 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackAttrib
+{
+    None,
+    Water,
+    Fire,
+    Wind,
+}
+
 public class Enemy : MonoBehaviour
 {
     // 1. maxHP, curHP
     // 2. Appear(), GetHit(), Dead()
-
-    int maxHp;
-    int curHp;
-    public bool isDead {private set; get;}
-
     [SerializeField] Animator animator;
     [SerializeField] GameObject efcDamagePrefab;
+    [SerializeField] GameObject efcCoinPrefab;
+
+    [Header("enemy info")]
+    [SerializeField] int coin;
+    [SerializeField] AttackAttrib attackAttrib;
+    public bool isDead {private set; get;}
+    int maxHp;
+    int curHp;
+    
 
     public void Appear(int maxHp)
     {
@@ -26,11 +38,11 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void GetHit(int damage)
+    public void GetHit(AttackInfo attackInfo)
     {
         if(isDead) return;
-        animator.SetTrigger("GetHit");
-        
+
+        int damage = attackInfo.GetDamage(attackAttrib);
         curHp -= damage;
         
         // 몬스터 피격 시 체력 감소 이펙트
@@ -53,7 +65,7 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Die");
         isDead = true;
         
-        GameManager.Manager.UpdateEnemyDie();
+        GameManager.Manager.UpdateEnemyDie(coin);
         Destroy(this.gameObject, 2f);
     }
 

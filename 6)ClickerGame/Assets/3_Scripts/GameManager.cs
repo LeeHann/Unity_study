@@ -29,18 +29,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    Enemy curEnemy;
+    int myCoin;
+    int Coin
+    {
+        set {
+            myCoin = value;
+            uiManager.UpdateCoin(myCoin);
+            PlayerPrefs.SetInt("Coin", myCoin);
+        }
+        get {return myCoin;}
+    }
+
     const float timeForKillEnemy = 5f;
     float curTime;
 
-    [SerializeField] GameObject EnemyPrefab;
+    [SerializeField] GameObject[] EnemyPrefabs;
     [SerializeField] Transform spawnEnemyPos;
     [SerializeField] Player player;
     [SerializeField] UIManager uiManager;
 
-    Enemy curEnemy;
+    
 
 
     private void Start() {
+        Coin = PlayerPrefs.GetInt("Coin", 0);
         DeadEnemy = 0;
         curTime = 0;
 
@@ -75,17 +88,19 @@ public class GameManager : MonoBehaviour
         curTime = 0;
         uiManager.UpdateTime(timeForKillEnemy, curTime);
 
-        GameObject enemyObj = Instantiate(EnemyPrefab, spawnEnemyPos);
+        int randomIndex = Random.Range(0, EnemyPrefabs.Length);
+
+        GameObject enemyObj = Instantiate(EnemyPrefabs[randomIndex], spawnEnemyPos);
         curEnemy = enemyObj.GetComponent<Enemy>();
         curEnemy.Appear(10);
 
         player.SetTarget(curEnemy);
     }
 
-    public void UpdateEnemyDie()
+    public void UpdateEnemyDie(int getCoin)
     {
         DeadEnemy += 1;
-
+        Coin += getCoin;
         Invoke("SpawnEnemy", 2f);
     }
 }
