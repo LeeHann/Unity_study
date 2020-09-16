@@ -48,7 +48,9 @@ MonoBehaviour:
   animator: {fileID: 7678152109376542131}
   efcDamagePrefab: {fileID: 6528350901580670977, guid: e84e4534533db25468214f9ad4d89d9e,
     type: 3}
-  coin: 10
+  efcCoinPrefab: {fileID: 5144164733824791169, guid: 6b6e9aebed832a7418d727577596ad7b,
+    type: 3}
+  baseCoin: 10
   attackAttrib: 2
 --- !u!1001 &3856919655055552471
 PrefabInstance:
