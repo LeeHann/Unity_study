@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
             rigidbody.AddForce(new Vector2(0f, jumpForce));
             audio.Play();
         }
-        else if(Input.GetMouseButtonUp(0) && rigidbody.velocity.y > 0)
+        else if(Input.GetMouseButtonUp(0) && rigidbody.velocity.y >= 0)
         {
             rigidbody.velocity *= 0.5f;
         }

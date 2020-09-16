@@ -28,9 +28,14 @@ public class PlatformSpawner : MonoBehaviour
         {
             platforms[i] = Instantiate(platformPrefab, poolPosition, Quaternion.identity); // prefab이 가진 고유의 값이 들어감.
         }
+
+        lastSpawnTime = 0;
+        timeBetSpawn = 0;
     }
 
     private void Update() {
+        if(GameManager.instance.isGameover == true) return;
+
         if(Time.time >= lastSpawnTime + timeBetSpawn)
         {
             lastSpawnTime = Time.time;
