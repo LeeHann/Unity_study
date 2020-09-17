@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+// delegate : 메소드를 변수처럼 담아올 수 있게 하는 것
 
 public class PlayerController : MonoBehaviour
 {
+    public delegate void UpdateNumberInfoAction(int a);
+
+    public UnityAction<int> UpdateHpAction;
+
     public int hp
     {
         get; private set;
@@ -30,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         rigidbody = GetComponent<Rigidbody2D>();
         startPos = transform.position;
-        hp = maxHp;
+        UpdateHp(maxHp);
     }
 
     private void Update() {
@@ -61,6 +68,8 @@ public class PlayerController : MonoBehaviour
         hp += addHp;
         if(hp > maxHp) hp = maxHp;
         if(hp < 0) hp = 0;
+
+        if(UpdateHpAction != null) UpdateHpAction(hp);
     }
 
     public void OnDead()
@@ -73,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
 
-        hp -= 1;
+        UpdateHp(-1);
         animator.SetBool("isDead", isDead);
         
         rigidbody.velocity = Vector2.zero;
