@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int hp
+    {
+        get; private set;
+    }
+    [SerializeField] int maxHp = 3;
+
     [SerializeField] float speed = 1f;
     [SerializeField] float jumpingPower = 5f;
     [SerializeField] int jumpableCount = 1;
@@ -14,16 +20,21 @@ public class PlayerController : MonoBehaviour
     
     bool isJumping = false;
     int jumpCount = 0;
+
+    Vector3 startPos;
     
-    bool isDead = false;
+    bool isDead = false; // hp 1개 없어지는 죽음
+    bool isReallyDead = false; // hp가 0이 되었을 때 죽음
 
 
     private void Start() {
         rigidbody = GetComponent<Rigidbody2D>();
+        startPos = transform.position;
+        hp = maxHp;
     }
 
     private void Update() {
-        if(isDead) return;
+        if(isDead || isReallyDead) return;
 
         float xAxis = Input.GetAxis("Horizontal");
         if(xAxis > 0.1 || xAxis < -0.1) 
@@ -39,17 +50,47 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if(isDead) return;
-        
+        if(isDead || isReallyDead) return;
+
         Move();
         Jump();
     }
 
+    public void UpdateHp(int addHp)
+    {
+        hp += addHp;
+        if(hp > maxHp) hp = maxHp;
+        if(hp < 0) hp = 0;
+    }
+
     public void OnDead()
+    {
+        if(isDead) return;
+        StartCoroutine(IEDead());
+    }
+
+    IEnumerator IEDead()
     {
         isDead = true;
 
+        hp -= 1;
         animator.SetBool("isDead", isDead);
+        
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(new Vector2(1f, 10f), ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1.5f);
+        
+        if(hp > 0)
+        {
+            // 부활
+            isDead = false;
+            transform.position = startPos;
+            animator.SetBool("isDead", isDead);
+        }
+        else{
+            isReallyDead = true;
+        }
     }
     
     void Move()
