@@ -1,17 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Events; // delegate
 
 // delegate : 메소드를 변수처럼 담아올 수 있게 하는 것
+
+// [System.Serializable] // 구조체 등 선언 위에 작성 시 변수를 에디터 상에서 드러내게 함
+// public class PlayerInfo : UnityEvent<int>  // * 이벤트 제어 클래스
+// {
+
+// }
+
+
 
 public class PlayerController : MonoBehaviour
 {
     // delegate
+    // public UnityAction<int> UpdateN;
+    // public UnityEvent<int, string> OnUpdate; // event/update 앞은 on을 자주 쓴다.
+    // public UnityEvent OnUpdate; // * 에디터 상에서 이벤트 제어 가능
+    // public PlayerInfo CoinEvent; // * 클래스를 사용하여 에디터 상에서 이벤트 제어
     public delegate void UpdateNumberInfoAction(int a);
-
-    public UpdateNumberInfoAction UpdateHpAction;
-    public UpdateNumberInfoAction UpdateCoinAction;
+    public event UpdateNumberInfoAction UpdateHpAction;
+    public event UpdateNumberInfoAction UpdateCoinAction;
 
 
     //property
@@ -35,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Animator animator;
     [SerializeField] SpriteRenderer renderer;
+    CapsuleCollider2D collider;
     Rigidbody2D rigidbody;
     
     bool isJumping = false;
@@ -48,8 +60,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start() {
         rigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<CapsuleCollider2D>();
         startPos = transform.position;
-        
         // hp, coin 초기화
         UpdateHp(maxHp);
         coin = 0;
@@ -109,7 +121,8 @@ public class PlayerController : MonoBehaviour
         
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(new Vector2(1f, 10f), ForceMode2D.Impulse);
-
+        collider.enabled = false;
+        renderer.sortingLayerName = "DeadPlayer";
         yield return new WaitForSeconds(1.5f);
         
         if(hp > 0)
@@ -117,6 +130,9 @@ public class PlayerController : MonoBehaviour
             // 부활
             isDead = false;
             transform.position = startPos;
+            collider.enabled = true;
+            renderer.sortingLayerName = "Player";
+            rigidbody.velocity = Vector2.zero;
             animator.SetBool("isDead", isDead);
         }
         else{

@@ -44,12 +44,18 @@ TagManager:
   - name: Platform
     uniqueID: 237443235
     locked: 0
-  - name: Water
-    uniqueID: 1858404971
-    locked: 0
   - name: Prop
     uniqueID: 2068838743
     locked: 0
   - name: Item
     uniqueID: 3650045405
+    locked: 0
+  - name: Player
+    uniqueID: 544185675
+    locked: 0
+  - name: Water
+    uniqueID: 1858404971
+    locked: 0
+  - name: DeadPlayer
+    uniqueID: 775845593
     locked: 0
