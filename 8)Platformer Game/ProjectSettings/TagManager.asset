@@ -41,12 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Water
-    uniqueID: 1858404971
-    locked: 0
   - name: Platform
     uniqueID: 237443235
     locked: 0
+  - name: Water
+    uniqueID: 1858404971
+    locked: 0
   - name: Prop
     uniqueID: 2068838743
+    locked: 0
+  - name: Item
+    uniqueID: 3650045405
     locked: 0

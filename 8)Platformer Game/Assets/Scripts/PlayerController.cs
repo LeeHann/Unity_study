@@ -7,14 +7,26 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
+    // delegate
     public delegate void UpdateNumberInfoAction(int a);
 
-    public UnityAction<int> UpdateHpAction;
+    public UpdateNumberInfoAction UpdateHpAction;
+    public UpdateNumberInfoAction UpdateCoinAction;
 
+
+    //property
     public int hp
     {
         get; private set;
     }
+
+    public int coin
+    {
+        get; private set;
+    }
+
+
+    // editor managing
     [SerializeField] int maxHp = 3;
 
     [SerializeField] float speed = 1f;
@@ -37,7 +49,10 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         rigidbody = GetComponent<Rigidbody2D>();
         startPos = transform.position;
+        
+        // hp, coin 초기화
         UpdateHp(maxHp);
+        coin = 0;
     }
 
     private void Update() {
@@ -70,6 +85,13 @@ public class PlayerController : MonoBehaviour
         if(hp < 0) hp = 0;
 
         if(UpdateHpAction != null) UpdateHpAction(hp);
+    }
+
+    public void GetCoin(int addCoin)
+    {
+        coin += addCoin;
+
+        if(UpdateCoinAction != null) UpdateCoinAction(coin);
     }
 
     public void OnDead()
