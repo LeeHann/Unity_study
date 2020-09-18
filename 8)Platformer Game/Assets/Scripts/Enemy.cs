@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator animator;
 
     private void Update() {
-        if(FindPlayer() == true)
+        if(FindAndFollowPlayer() == true)
         {
 
         } else{
@@ -29,21 +29,28 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    bool FindPlayer()
+    bool FindAndFollowPlayer()
     {
-        Ray2D ray = new Ray2D(transform.position, GetDirection());
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, findTargetLength);
+        Vector3 startDir = transform.position + new Vector3(0f, 0.3f, 0f);
+        Vector2 findDir = GetDirection() * findTargetLength;
+        Ray2D ray = new Ray2D(startDir, findDir);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, findTargetLength);
+        
+        Debug.DrawRay(ray.origin, findDir, Color.red, 0.1f);
 
-        if(hit.collider != null)
-        {
-            PlayerController player = hit.collider.GetComponent<PlayerController>();
+        foreach(var hit in hits){
+            if(hit.collider != null)
+            {   
+                PlayerController player = hit.collider.GetComponent<PlayerController>();
 
-            if(player != null)
-            {
-                OnFollow(player.transform.position);
-                return true;
+                if(player != null)
+                {
+                    OnFollow(player.transform.position);
+                    return true;
+                }
             }
         }
+        
         return false;
     }
 
